@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Professional portfolio showcasing web development skills and projects">
-    <meta name="author" content="Your Name">
-    <meta property="og:title" content="Professional Web Developer Portfolio">
-    <meta property="og:description" content="Check out my web development projects and skills">
-    <meta property="og:image" content="https://example.com/portfolio-og-image.jpg">
-    <meta property="og:url" content="https://example.com">
-    <link rel="canonical" href="https://example.com">
     <title>Your Name | Web Developer Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
             --dark-color: #1e293b;
             --light-color: #f8fafc;
             --gray-color: #64748b;
             --transition: all 0.3s ease;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-hover: 0 10px 15px rgba(0,0,0,0.1);
+            --header-height: 80px;
         }
         
         * {
@@ -27,10 +26,17 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Open Sans', sans-serif;
             line-height: 1.6;
             color: var(--dark-color);
             background-color: var(--light-color);
+            overflow-x: hidden;
+            padding-top: var(--header-height);
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
         }
         
         .container {
@@ -47,49 +53,72 @@
             left: 0;
             background: var(--primary-color);
             color: white;
-            padding: 8px;
-            z-index: 100;
+            padding: 8px 16px;
+            z-index: 1000;
             transition: var(--transition);
+            border-radius: 0 0 4px 0;
+            font-weight: 500;
         }
         
         .skip-link:focus {
             top: 0;
+            outline: 3px solid var(--primary-dark);
         }
         
         /* Header Styles */
         header[role="banner"] {
             background-color: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
+            transition: var(--transition);
+            height: var(--header-height);
         }
         
         .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
+            height: 100%;
+            padding: 0;
         }
         
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
             color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo i {
+            font-size: 1.4rem;
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-color);
+            z-index: 1001;
         }
         
         nav[role="navigation"] {
             display: flex;
+            height: 100%;
         }
         
         .nav-list {
             display: flex;
             list-style: none;
-        }
-        
-        .nav-item {
-            margin-left: 2rem;
+            gap: 1.5rem;
+            height: 100%;
+            align-items: center;
         }
         
         .nav-link {
@@ -98,6 +127,11 @@
             font-weight: 500;
             transition: var(--transition);
             position: relative;
+            padding: 8px 0;
+            font-size: 1.1rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
         }
         
         .nav-link:hover {
@@ -107,12 +141,13 @@
         .nav-link::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 0;
             width: 0;
-            height: 2px;
+            height: 3px;
             background-color: var(--primary-color);
             transition: var(--transition);
+            border-radius: 2px;
         }
         
         .nav-link:hover::after {
@@ -121,67 +156,107 @@
         
         /* Hero Section */
         #hero {
-            height: 100vh;
+            min-height: calc(100vh - var(--header-height));
             display: flex;
             align-items: center;
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            padding-top: 70px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
         }
         
         .hero-content {
-            max-width: 600px;
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+            margin: 0 auto;
+            padding: 0 20px;
         }
         
         .hero-title {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1.2rem;
             line-height: 1.2;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero-highlight {
+            color: var(--primary-color);
+            position: relative;
         }
         
         .hero-subtitle {
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 2vw, 1.8rem);
             color: var(--gray-color);
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
         }
         
         .btn {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             background-color: var(--primary-color);
             color: white;
-            padding: 12px 30px;
+            padding: 14px 32px;
             border-radius: 30px;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
             transition: var(--transition);
             border: 2px solid var(--primary-color);
+            font-size: 1.1rem;
+            gap: 8px;
         }
         
         .btn:hover {
             background-color: transparent;
             color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
         }
         
         /* Sections */
         section {
-            padding: 5rem 0;
+            padding: 6rem 0;
         }
         
-        section h2 {
-            font-size: 2.5rem;
+        .section-title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
             margin-bottom: 3rem;
             text-align: center;
             position: relative;
+            padding-bottom: 1.5rem;
         }
         
-        section h2::after {
+        .section-title::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: 0;
             left: 50%;
             transform: translateX(-50%);
             width: 80px;
-            height: 4px;
+            height: 5px;
             background-color: var(--primary-color);
+            border-radius: 3px;
         }
         
         /* About Section */
@@ -197,94 +272,236 @@
         }
         
         .about-img {
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-hover);
+            position: relative;
+            height: 450px;
+            background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
         }
         
-        .about-img img {
+        .about-img:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .profile-image {
             width: 100%;
-            height: auto;
-            display: block;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
         }
         
         .about-text h3 {
             font-size: 1.8rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .about-text p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .stat-card {
+            background: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: #e2e8f0;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: var(--gray-color);
         }
         
         /* Skills Section */
+        #skills {
+            background-color: #f1f5f9;
+        }
+        
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 2rem;
         }
         
         .skill-card {
             background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
             transition: var(--transition);
             text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(37, 99, 235, 0.1);
         }
         
         .skill-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition);
+        }
+        
+        .skill-card:hover::before {
+            transform: scaleX(1);
         }
         
         .skill-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
             color: var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        .skill-card:hover .skill-icon {
+            transform: scale(1.1);
+        }
+        
+        .skill-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .skill-card p {
+            color: var(--gray-color);
+            font-size: 1.05rem;
         }
         
         /* Projects Section */
         #projects {
-            background-color: #f1f5f9;
+            background-color: white;
         }
         
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
         }
         
         .project-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow);
             transition: var(--transition);
+            position: relative;
         }
         
         .project-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-hover);
         }
         
         .project-img {
-            height: 200px;
-            background-color: #e2e8f0;
+            height: 220px;
+            background: linear-gradient(45deg, #e0f2fe, #dbeafe);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--gray-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-img::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.1));
         }
         
         .project-content {
-            padding: 1.5rem;
+            padding: 1.8rem;
         }
         
         .project-title {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark-color);
+        }
+        
+        .project-tech {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+        }
+        
+        .tech-tag {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 1.5rem;
+        }
+        
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .project-link:hover {
+            color: var(--primary-dark);
+            transform: translateX(5px);
         }
         
         /* Contact Section */
         #contact {
-            background-color: white;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
         }
         
         .contact-container {
@@ -293,9 +510,54 @@
             gap: 3rem;
         }
         
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            gap: 1.2rem;
+            align-items: flex-start;
+        }
+        
+        .contact-icon {
+            background: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        
+        .contact-details h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-details p, .contact-details a {
+            color: var(--gray-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+        
+        .contact-details a:hover {
+            color: var(--primary-color);
+        }
+        
         .contact-form {
             display: grid;
-            gap: 1rem;
+            gap: 1.2rem;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
         }
         
         .form-group {
@@ -304,17 +566,26 @@
         }
         
         .form-group label {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
             font-weight: 500;
+            font-size: 1.1rem;
         }
         
         .form-group input,
         .form-group textarea {
-            padding: 12px;
+            padding: 14px;
             border: 1px solid #cbd5e1;
-            border-radius: 5px;
+            border-radius: 8px;
             font-family: inherit;
             font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
         }
         
         .form-group textarea {
@@ -322,37 +593,82 @@
             resize: vertical;
         }
         
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+        
         /* Footer */
         footer[role="contentinfo"] {
             background-color: var(--dark-color);
             color: white;
-            padding: 3rem 0;
-            text-align: center;
+            padding: 4rem 0 2rem;
         }
         
-        .footer-content {
-            max-width: 600px;
-            margin: 0 auto;
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .footer-col p {
+            color: #cbd5e1;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
         }
         
         .social-links {
             display: flex;
-            justify-content: center;
             gap: 1rem;
-            margin: 1.5rem 0;
+            margin-top: 1.5rem;
         }
         
         .social-link {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             background-color: rgba(255,255,255,0.1);
             color: white;
             border-radius: 50%;
             transition: var(--transition);
             text-decoration: none;
+            font-size: 1.2rem;
         }
         
         .social-link:hover {
@@ -360,29 +676,78 @@
             transform: translateY(-5px);
         }
         
-        .copyright {
-            margin-top: 1.5rem;
-            color: #94a3b8;
-            font-size: 0.9rem;
+        .footer-links {
+            list-style: none;
         }
         
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .about-content,
-            .contact-container {
-                grid-template-columns: 1fr;
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2.5rem;
+            margin-top: 2.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            text-decoration: none;
+            z-index: 99;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .back-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-5px);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
-            
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-            
-            .nav-list {
-                display: none;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
         
@@ -395,6 +760,127 @@
                 scroll-behavior: auto !important;
             }
         }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-content,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-img {
+                height: auto;
+                aspect-ratio: 3/4;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            
+            .contact-info {
+                order: 2;
+            }
+            
+            .contact-form {
+                order: 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            nav[role="navigation"] {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: white;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                flex-direction: column;
+                padding: 80px 30px 30px;
+                transition: var(--transition);
+                z-index: 1000;
+            }
+            
+            nav[role="navigation"].active {
+                right: 0;
+            }
+            
+            .nav-list {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .nav-item {
+                margin: 0;
+                width: 100%;
+            }
+            
+            .nav-link {
+                display: block;
+                padding: 15px 0;
+                border-bottom: 1px solid rgba(0,0,0,0.05);
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            :root {
+                --header-height: 70px;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .skills-grid,
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .contact-form {
+                padding: 1.5rem;
+            }
+            
+            .submit-btn {
+                width: 100%;
+            }
+            
+            .about-img {
+                max-width: 100%;
+            }
+            
+            .form-group label {
+                font-size: 1rem;
+            }
+            
+            .form-group input,
+            .form-group textarea {
+                padding: 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -404,8 +890,16 @@
     <!-- Header with ARIA Banner Role -->
     <header role="banner">
         <div class="container header-container">
-            <div class="logo">Portfolio</div>
-            <nav role="navigation" aria-label="Main Navigation">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                <span>Portfolio</span>
+            </div>
+            
+            <button class="menu-toggle" aria-label="Toggle menu" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav role="navigation" aria-label="Main Navigation" id="mainNav">
                 <ul class="nav-list">
                     <li class="nav-item"><a href="#hero" class="nav-link">Home</a></li>
                     <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
@@ -422,25 +916,57 @@
         <!-- Hero Section -->
         <section id="hero">
             <div class="container hero-content">
-                <h1 class="hero-title">Hi, I'm <span style="color: var(--primary-color)">Your Name</span><br>Web Developer</h1>
+                <h1 class="hero-title">Hi, I'm <span class="hero-highlight">Your Name</span><br>Web Developer</h1>
                 <p class="hero-subtitle">I create beautiful, responsive websites with a focus on accessibility and performance</p>
-                <a href="#projects" class="btn">View My Work</a>
+                <div class="hero-btns">
+                    <a href="#projects" class="btn">
+                        <i class="fas fa-laptop-code"></i> View My Work
+                    </a>
+                    <a href="#contact" class="btn btn-outline">
+                        <i class="fas fa-paper-plane"></i> Contact Me
+                    </a>
+                </div>
             </div>
         </section>
         
         <!-- About Section -->
         <section id="about">
             <div class="container">
-                <h2>About Me</h2>
+                <h2 class="section-title">About Me</h2>
                 <div class="about-content">
                     <div class="about-img">
-                        <div style="background-color: #cbd5e1; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--gray-color);">Profile Image</div>
+                        <!-- Responsive profile image placeholder -->
+                        <div style="display: flex; align-items: center; justify-content: center; height: 100%; width: 100%; background: linear-gradient(45deg, #93c5fd, #60a5fa); color: white; font-size: 1.2rem;">
+                            <div style="text-align: center; padding: 20px;">
+                                <i class="fas fa-user fa-5x"></i>
+                                <p style="margin-top: 15px; font-size: 1.1rem;">Profile Image</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="about-text">
                         <h3>Professional Web Developer</h3>
                         <p>I'm a passionate web developer with expertise in creating modern, accessible websites. With a strong foundation in semantic HTML, responsive CSS, and JavaScript, I build websites that work beautifully across all devices.</p>
                         <p>My approach focuses on clean code, performance optimization, and user-centered design. I stay updated with the latest web standards and accessibility guidelines to ensure my projects meet professional requirements.</p>
                         <p>When I'm not coding, you can find me contributing to open-source projects, writing technical articles, or exploring new web technologies.</p>
+                        
+                        <div class="about-stats">
+                            <div class="stat-card">
+                                <div class="stat-number">5+</div>
+                                <div class="stat-label">Years Experience</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">120+</div>
+                                <div class="stat-label">Projects Completed</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">98%</div>
+                                <div class="stat-label">Client Satisfaction</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">25+</div>
+                                <div class="stat-label">Happy Clients</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -449,25 +975,33 @@
         <!-- Skills Section -->
         <section id="skills">
             <div class="container">
-                <h2>My Skills</h2>
+                <h2 class="section-title">My Skills</h2>
                 <div class="skills-grid">
                     <div class="skill-card">
-                        <div class="skill-icon">HTML5</div>
+                        <div class="skill-icon">
+                            <i class="fab fa-html5"></i>
+                        </div>
                         <h3>Semantic HTML</h3>
                         <p>Creating accessible, well-structured markup with proper semantic elements and ARIA attributes.</p>
                     </div>
                     <div class="skill-card">
-                        <div class="skill-icon">CSS3</div>
+                        <div class="skill-icon">
+                            <i class="fab fa-css3-alt"></i>
+                        </div>
                         <h3>Responsive CSS</h3>
                         <p>Building responsive layouts with modern CSS techniques including Flexbox and Grid.</p>
                     </div>
                     <div class="skill-card">
-                        <div class="skill-icon">JS</div>
+                        <div class="skill-icon">
+                            <i class="fab fa-js"></i>
+                        </div>
                         <h3>JavaScript</h3>
                         <p>Developing interactive experiences with modern JavaScript and DOM manipulation.</p>
                     </div>
                     <div class="skill-card">
-                        <div class="skill-icon">♿</div>
+                        <div class="skill-icon">
+                            <i class="fas fa-universal-access"></i>
+                        </div>
                         <h3>Accessibility</h3>
                         <p>Implementing WCAG standards to create inclusive web experiences for all users.</p>
                     </div>
@@ -478,27 +1012,81 @@
         <!-- Projects Section -->
         <section id="projects">
             <div class="container">
-                <h2>My Projects</h2>
+                <h2 class="section-title">My Projects</h2>
                 <div class="projects-grid">
                     <div class="project-card">
-                        <div class="project-img">Project Image</div>
+                        <div class="project-img">
+                            <div>
+                                <i class="fas fa-shopping-cart fa-3x"></i>
+                                <p>E-Commerce Preview</p>
+                            </div>
+                        </div>
                         <div class="project-content">
                             <h3 class="project-title">E-Commerce Website</h3>
                             <p>A fully responsive online store with product filtering and cart functionality.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">Node.js</span>
+                                <span class="tech-tag">MongoDB</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">
+                                    <i class="fab fa-github"></i> Code
+                                </a>
+                                <a href="#" class="project-link">
+                                    <i class="fas fa-external-link-alt"></i> Demo
+                                </a>
+                            </div>
                         </div>
                     </div>
                     <div class="project-card">
-                        <div class="project-img">Project Image</div>
+                        <div class="project-img">
+                            <div>
+                                <i class="fas fa-briefcase fa-3x"></i>
+                                <p>Portfolio Preview</p>
+                            </div>
+                        </div>
                         <div class="project-content">
                             <h3 class="project-title">Portfolio Template</h3>
                             <p>A customizable portfolio template built with semantic HTML and modern CSS.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML5</span>
+                                <span class="tech-tag">CSS3</span>
+                                <span class="tech-tag">JavaScript</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">
+                                    <i class="fab fa-github"></i> Code
+                                </a>
+                                <a href="#" class="project-link">
+                                    <i class="fas fa-external-link-alt"></i> Demo
+                                </a>
+                            </div>
                         </div>
                     </div>
                     <div class="project-card">
-                        <div class="project-img">Project Image</div>
+                        <div class="project-img">
+                            <div>
+                                <i class="fas fa-tasks fa-3x"></i>
+                                <p>Task App Preview</p>
+                            </div>
+                        </div>
                         <div class="project-content">
                             <h3 class="project-title">Task Management App</h3>
                             <p>A productivity application with drag-and-drop functionality and local storage.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Vue.js</span>
+                                <span class="tech-tag">Firebase</span>
+                                <span class="tech-tag">Tailwind CSS</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">
+                                    <i class="fab fa-github"></i> Code
+                                </a>
+                                <a href="#" class="project-link">
+                                    <i class="fas fa-external-link-alt"></i> Demo
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -508,27 +1096,54 @@
         <!-- Contact Section -->
         <section id="contact">
             <div class="container">
-                <h2>Contact Me</h2>
+                <h2 class="section-title">Contact Me</h2>
                 <div class="contact-container">
-                    <div>
-                        <p>Have a project in mind or want to discuss opportunities? Feel free to reach out!</p>
-                        <p>I'm available for freelance work and full-time positions. Let's create something amazing together.</p>
-                        <p>Email: contact@example.com<br>Phone: (123) 456-7890</p>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Email</h3>
+                                <a href="mailto:contact@example.com">contact@example.com</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Phone</h3>
+                                <a href="tel:+1234567890">(123) 456-7890</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Location</h3>
+                                <p>San Francisco, California</p>
+                            </div>
+                        </div>
                     </div>
+                    
                     <form class="contact-form">
                         <div class="form-group">
-                            <label for="name">Name</label>
+                            <label for="name">Full Name</label>
                             <input type="text" id="name" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
+                            <label for="email">Email Address</label>
                             <input type="email" id="email" name="email" required>
                         </div>
                         <div class="form-group">
-                            <label for="message">Message</label>
+                            <label for="message">Your Message</label>
                             <textarea id="message" name="message" required></textarea>
                         </div>
-                        <button type="submit" class="btn">Send Message</button>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
                     </form>
                 </div>
             </div>
@@ -537,18 +1152,58 @@
     
     <!-- Footer with ARIA Contentinfo Role -->
     <footer role="contentinfo">
-        <div class="container footer-content">
-            <h3>Your Name</h3>
-            <p>Professional Web Developer</p>
-            <div class="social-links">
-                <a href="#" class="social-link" aria-label="LinkedIn">in</a>
-                <a href="#" class="social-link" aria-label="GitHub">gh</a>
-                <a href="#" class="social-link" aria-label="Twitter">tw</a>
-                <a href="#" class="social-link" aria-label="Dribbble">db</a>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>Portfolio</h3>
+                    <p>A showcase of my web development projects and skills. Built with modern web technologies and best practices.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Dribbble">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#hero"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#about"><i class="fas fa-chevron-right"></i> About</a></li>
+                        <li><a href="#skills"><i class="fas fa-chevron-right"></i> Skills</a></li>
+                        <li><a href="#projects"><i class="fas fa-chevron-right"></i> Projects</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> San Francisco, CA</a></li>
+                        <li><a href="tel:+1234567890"><i class="fas fa-phone"></i> (123) 456-7890</a></li>
+                        <li><a href="mailto:contact@example.com"><i class="fas fa-envelope"></i> contact@example.com</a></li>
+                    </ul>
+                </div>
             </div>
-            <p class="copyright">© 2025 Your Name. All rights reserved.</p>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Your Name. All rights reserved.</p>
+            </div>
         </div>
     </footer>
+    
+    <!-- Back to top button -->
+    <a href="#" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
     
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
@@ -568,6 +1223,64 @@
         "name": "Freelance"
       }  
     }
+    </script>
+    
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            menuToggle.innerHTML = mainNav.classList.contains('active') ? 
+                '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Back to top button
+        const backToTop = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Form submission
+        const contactForm = document.querySelector('.contact-form');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // In a real implementation, you would send the form data to a server
+            alert('Thank you for your message! I will get back to you soon.');
+            this.reset();
+        });
     </script>
 </body>
 </html>
